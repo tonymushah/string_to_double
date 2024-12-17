@@ -16,6 +16,7 @@
         "*.ts__template__": "typescript",
         "*.nnm": "html",
         "*.json5": "jsonc",
-        "math.h": "c"
+        "math.h": "c",
+        "string_to_double.h": "c"
     }
 }
