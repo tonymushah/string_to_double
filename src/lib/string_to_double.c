@@ -278,6 +278,15 @@ int operator_numbers(char *input, char operator)
 
 double parse_multiply(char *input)
 {
+    int multiply_number = operator_numbers(input, MULTIPLY_OPERATOR) + 1;
+
+    char **_splitted = _split(rm_spaces(input), MULTIPLY_OPERATOR, multiply_number);
+    double res = 1;
+    for (int i = 0; i < multiply_number; i++)
+    {
+        res = res * parse_sqrt(_splitted[i]);
+    }
+    return res;
 }
 
 char *until_next_token(char *input, int *cursor)
