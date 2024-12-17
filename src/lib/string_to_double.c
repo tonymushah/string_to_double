@@ -18,18 +18,6 @@ void not_implemented()
     throw_error("The string to double function is not yet implemented!");
 }
 
-const char SQRT_OPERATOR = 'V';
-
-const char PLUS_OPERATOR = '+';
-
-const char MINUS_OPERATOR = '-';
-
-const char DIVIDE_OPERATOR = '/';
-
-const char MULTIPLY_OPERATOR = '*';
-
-const char FLOAT_OPERATOR = '.';
-
 int chars_size(char *chars)
 {
     int size = 0;
@@ -76,6 +64,42 @@ void push_char(char **chars, char to_push)
     free(*chars);
     *chars = new_chars;
 }
+
+char *init_empty_chars()
+{
+    char *new = malloc(sizeof(char));
+    new[0] = '\0';
+    return new;
+}
+
+char *rm_spaces(char *input)
+{
+    char *res = init_empty_chars();
+    int cursor_index = 0;
+    char cursor = input[cursor_index];
+    while (cursor != '\0')
+    {
+        if (cursor != ' ')
+        {
+            push_char(&res, cursor);
+        }
+        cursor_index++;
+        cursor = input[cursor_index];
+    }
+    return res;
+}
+
+const char SQRT_OPERATOR = 'V';
+
+const char PLUS_OPERATOR = '+';
+
+const char MINUS_OPERATOR = '-';
+
+const char DIVIDE_OPERATOR = '/';
+
+const char MULTIPLY_OPERATOR = '*';
+
+const char FLOAT_OPERATOR = '.';
 
 int is_token(char token)
 {
