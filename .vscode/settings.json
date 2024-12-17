@@ -7,5 +7,15 @@
     },
     "[toml]": {
         "editor.formatOnSave": true
+    },
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "*.fxcss": "css",
+        "*.php": "php",
+        "*.tsx__template__": "typescriptreact",
+        "*.ts__template__": "typescript",
+        "*.nnm": "html",
+        "*.json5": "jsonc",
+        "math.h": "c"
     }
 }
