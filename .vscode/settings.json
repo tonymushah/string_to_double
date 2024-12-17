@@ -3,7 +3,7 @@
         "editor.wordBasedSuggestions": "off",
         "editor.suggest.insertMode": "replace",
         "editor.semanticHighlighting.enabled": true,
-        "editor.formatOnSave": false,
+        "editor.formatOnSave":true,
     },
     "[toml]": {
         "editor.formatOnSave": true

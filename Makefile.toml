@@ -3,7 +3,7 @@ command = "mkdir"
 args = ["target"]
 
 [tasks.compile]
-script = "gcc -o ./target/main -I./src/lib ./src/main.c ./src/lib/*.c"
+script = "gcc -o ./target/main -I./src/lib -lm ./src/main.c ./src/lib/*.c"
 #command = "gcc"
 #args = ["-o", "./target/main", "-I./src/lib", "./src/main.c", "./src/lib/*.c"]
 

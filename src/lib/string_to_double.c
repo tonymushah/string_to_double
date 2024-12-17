@@ -7,12 +7,14 @@ int _TRUE = 0;
 
 int _FALSE = 1;
 
-void throw_error(char* message) {
+void throw_error(char *message)
+{
     printf("%s\n", message);
     exit(1);
 }
 
-void not_implemented() {
+void not_implemented()
+{
     throw_error("The string to double function is not yet implemented!");
 }
 
@@ -28,7 +30,8 @@ const char MULTIPLY_OPERATOR = '*';
 
 const char FLOAT_OPERATOR = '.';
 
-int chars_size(char* chars) {
+int chars_size(char *chars)
+{
     int size = 0;
     char cursor = chars[0];
     while (cursor != '\0')
@@ -39,7 +42,8 @@ int chars_size(char* chars) {
     return size;
 }
 
-void populate_char(char* left, char* right) {
+void populate_char(char *left, char *right)
+{
     int cursor_index = 0;
     char cursor = right[cursor_index];
     while (cursor != '\0')
@@ -50,20 +54,22 @@ void populate_char(char* left, char* right) {
     }
 }
 
-char* concat_chars(char* left, char* right) {
+char *concat_chars(char *left, char *right)
+{
     int l_size = chars_size(left);
     int r_size = chars_size(right);
     int lr_size = l_size + r_size;
-    char* new_chars = malloc((lr_size + 1) * sizeof(char));
+    char *new_chars = malloc((lr_size + 1) * sizeof(char));
     populate_char(new_chars, left);
     populate_char(&new_chars[l_size], right);
     new_chars[lr_size] = '\0';
     return new_chars;
 }
 
-void push_char(char** chars, char to_push){
+void push_char(char **chars, char to_push)
+{
     int chars_len = chars_size(*chars);
-    char* new_chars = malloc((chars_len + 2) * sizeof(char));
+    char *new_chars = malloc((chars_len + 2) * sizeof(char));
     populate_char(new_chars, *chars);
     new_chars[chars_len] = to_push;
     new_chars[chars_len + 1] = '\0';
@@ -71,7 +77,8 @@ void push_char(char** chars, char to_push){
     *chars = new_chars;
 }
 
-int is_token(char token){
+int is_token(char token)
+{
     if (token == SQRT_OPERATOR)
     {
         return _TRUE;
@@ -80,13 +87,16 @@ int is_token(char token){
     {
         return _TRUE;
     }
-    else if(token == MINUS_OPERATOR) {
+    else if (token == MINUS_OPERATOR)
+    {
         return _TRUE;
     }
-    else if(token == DIVIDE_OPERATOR) {
+    else if (token == DIVIDE_OPERATOR)
+    {
         return _TRUE;
     }
-    else if(token == MULTIPLY_OPERATOR){
+    else if (token == MULTIPLY_OPERATOR)
+    {
         return _TRUE;
     }
     else
@@ -95,9 +105,8 @@ int is_token(char token){
     }
 }
 
-
-
-int char_to_int(char input){
+int char_to_int(char input)
+{
     switch (input)
     {
     case '0':
@@ -126,13 +135,14 @@ int char_to_int(char input){
     }
 }
 
-int pow_i(int __x, int __y) {
+int pow_i(int __x, int __y)
+{
     int res = 1;
     if (__y == 0)
     {
         return 1;
     }
-    
+
     for (int i = 1; i <= __y; i++)
     {
         res = res * __x;
@@ -140,7 +150,8 @@ int pow_i(int __x, int __y) {
     return res;
 }
 
-int chars_to_int(char* input) {
+int chars_to_int(char *input)
+{
     int res = 0;
     int len = chars_size(input);
     for (int i = 0; i < len; i++)
@@ -150,11 +161,67 @@ int chars_to_int(char* input) {
     return res;
 }
 
-char* until_next_token(char* input, int* cursor){
+char **init_chars_table(int size)
+{
+    char **new_table = malloc(size * sizeof(char *));
+    for (int i = 0; i < size; i++)
+    {
+        new_table[i] = malloc(1 * sizeof(char));
+        new_table[i][0] = '\0';
+    }
+    return new_table;
+}
+
+char **_split(char *input, char to_split, int size)
+{
+    char **splitted = init_chars_table(size);
+    int splitted_index = 0;
+    int cursor_index = 0;
+    char cursor = input[cursor_index];
+    while (cursor != '\0')
+    {
+        if (splitted_index > size)
+        {
+            printf("%d;%d\n", splitted_index, size);
+            break;
+        }
+        if (cursor == to_split)
+        {
+            splitted_index++;
+        }
+        else
+        {
+            push_char(&(splitted[splitted_index]), cursor);
+        }
+        cursor_index++;
+        cursor = input[cursor_index];
+    }
+    return splitted;
+}
+
+void free_chars_table(char **chars_table, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        free(chars_table[i]);
+    }
+    free(chars_table);
+}
+
+double parse_floats(char *input)
+{
+    char **splitted = _split(input, FLOAT_OPERATOR, 2);
+    double res = chars_to_int(splitted[0]) + (chars_to_int(splitted[1]) / pow(10, chars_size(splitted[1])));
+    free_chars_table(splitted, 2);
+    return res;
+}
+
+char *until_next_token(char *input, int *cursor)
+{
     return "0";
 }
 
-double string_to_double(char* input)
+double string_to_double(char *input)
 {
     double res = 0;
     not_implemented();
