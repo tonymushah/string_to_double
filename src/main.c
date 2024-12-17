@@ -12,5 +12,7 @@ int main()
     */
     printf("%s\n", rm_spaces("2 V 3 * 4"));
     printf("%lf\n", parse_floats("123.534"));
+    printf("%lf\n", parse_sqrt("2V3"));
+    printf("%d\n", operator_numbers("2 * 4 * 5", '*'));
     return 0;
 }

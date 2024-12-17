@@ -240,6 +240,35 @@ double parse_floats(char *input)
     return res;
 }
 
+double parse_sqrt(char *input)
+{
+    char **splitted = _split(rm_spaces(input), SQRT_OPERATOR, 2);
+    double res = parse_floats(splitted[0]) * sqrt(parse_floats(splitted[1]));
+    free_chars_table(splitted, 2);
+    return res;
+}
+
+int operator_numbers(char *input, char operator)
+{
+    int count = 0;
+    int cursor_index = 0;
+    char cursor = input[cursor_index];
+    while (cursor != '\0')
+    {
+        if (cursor == operator)
+        {
+            count++;
+        }
+        cursor_index++;
+        cursor = input[cursor_index];
+    }
+    return count;
+}
+
+double parse_multiply(char *input)
+{
+}
+
 char *until_next_token(char *input, int *cursor)
 {
     return "0";
