@@ -3,6 +3,9 @@
         "editor.wordBasedSuggestions": "off",
         "editor.suggest.insertMode": "replace",
         "editor.semanticHighlighting.enabled": true,
-        "editor.formatOnSave": false
+        "editor.formatOnSave": false,
+    },
+    "[toml]": {
+        "editor.formatOnSave": true
     }
 }

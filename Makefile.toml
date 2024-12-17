@@ -1,0 +1,12 @@
+[tasks.make-target-dir]
+command = "mkdir"
+args = ["target"]
+
+[tasks.compile]
+script = "gcc -o ./target/main -I./src/lib ./src/main.c ./src/lib/*.c"
+#command = "gcc"
+#args = ["-o", "./target/main", "-I./src/lib", "./src/main.c", "./src/lib/*.c"]
+
+[tasks.run]
+command = "./target/main"
+dependencies = ["compile"]
