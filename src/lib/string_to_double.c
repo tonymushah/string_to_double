@@ -243,7 +243,18 @@ double parse_floats(char *input)
 double parse_sqrt(char *input)
 {
     char **splitted = _split(rm_spaces(input), SQRT_OPERATOR, 2);
-    double res = parse_floats(splitted[0]) * sqrt(parse_floats(splitted[1]));
+    double left = parse_floats(splitted[0]);
+    double right = sqrt(parse_floats(splitted[1]));
+    double res;
+    if (right == 0)
+    {
+        res = left;
+    }
+    else
+    {
+        res = left * right;
+    }
+
     free_chars_table(splitted, 2);
     return res;
 }
