@@ -403,11 +403,6 @@ double parse_envel(char *input)
     }
 }
 
-char *until_next_token(char *input, int *cursor)
-{
-    return "0";
-}
-
 double string_to_double(char *input)
 {
     double res = 0;
