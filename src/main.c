@@ -22,5 +22,6 @@ int main()
     printf("%lf\n", parse_substract("2 - 4 + 6 * 0"));
     printf("%lf\n", parse_substract("V2 / 2 + 1"));
     printf("%s\n", rm_envelloppe("((()))"));
+    printf("%d\n", operator_numbers("(2 * 4 * 5) * 2", '*'));
     return 0;
 }

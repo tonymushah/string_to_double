@@ -265,14 +265,26 @@ double parse_sqrt(char *input)
 
 int operator_numbers(char *input, char operator)
 {
+    int env_count = 0;
     int count = 0;
     int cursor_index = 0;
     char cursor = input[cursor_index];
     while (cursor != '\0')
     {
-        if (cursor == operator)
+        if (cursor == '(')
         {
-            count++;
+            env_count++;
+        }
+        else if (cursor == ')')
+        {
+            env_count--;
+        }
+        if (env_count == 0)
+        {
+            if (cursor == operator)
+            {
+                count++;
+            }
         }
         cursor_index++;
         cursor = input[cursor_index];
