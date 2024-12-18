@@ -15,5 +15,6 @@ int operator_numbers(char *input, char operator);
 double parse_multiply(char *input);
 double parse_division(char *input);
 double parse_add(char *input);
+double parse_substract(char *input);
 
 #endif

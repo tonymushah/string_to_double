@@ -298,17 +298,10 @@ double parse_division(char *input)
 {
     int division_number = operator_numbers(input, DIVIDE_OPERATOR) + 1;
     char **_splitted = _split(rm_spaces(input), DIVIDE_OPERATOR, division_number);
-    double res = 0;
-    for (int i = 0; i < division_number; i++)
+    double res = parse_multiply(_splitted[0]);
+    for (int i = 1; i < division_number; i++)
     {
-        if (res == 0)
-        {
-            res = parse_multiply(_splitted[i]);
-        }
-        else
-        {
-            res = res / parse_multiply(_splitted[i]);
-        }
+        res = res / parse_multiply(_splitted[i]);
     }
     return res;
 }
@@ -321,6 +314,18 @@ double parse_add(char *input)
     for (int i = 0; i < add_number; i++)
     {
         res = res + parse_division(_splitted[i]);
+    }
+    return res;
+}
+
+double parse_substract(char *input)
+{
+    int add_number = operator_numbers(input, MINUS_OPERATOR) + 1;
+    char **_splitted = _split(rm_spaces(input), MINUS_OPERATOR, add_number);
+    double res = parse_add(_splitted[0]);
+    for (int i = 1; i < add_number; i++)
+    {
+        res = res - parse_add(_splitted[i]);
     }
     return res;
 }
