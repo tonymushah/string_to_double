@@ -313,6 +313,18 @@ double parse_division(char *input)
     return res;
 }
 
+double parse_add(char *input)
+{
+    int add_number = operator_numbers(input, PLUS_OPERATOR) + 1;
+    char **_splitted = _split(rm_spaces(input), PLUS_OPERATOR, add_number);
+    double res = 0;
+    for (int i = 0; i < add_number; i++)
+    {
+        res = res + parse_division(_splitted[i]);
+    }
+    return res;
+}
+
 char *until_next_token(char *input, int *cursor)
 {
     return "0";

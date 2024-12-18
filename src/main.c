@@ -18,5 +18,6 @@ int main()
     printf("%d\n", operator_numbers("2 * 4 * 5", '*'));
     printf("%lf\n", parse_multiply("2 * 4 * 5"));
     printf("%lf\n", parse_division("2 * 3 / V6"));
+    printf("%lf\n", parse_add("2 + 3 * V7"));
     return 0;
 }
