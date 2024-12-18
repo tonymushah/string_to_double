@@ -246,9 +246,13 @@ double parse_sqrt(char *input)
     double left = parse_floats(splitted[0]);
     double right = sqrt(parse_floats(splitted[1]));
     double res;
-    if (right == 0)
+    if (left != 0 && right == 0)
     {
         res = left;
+    }
+    else if (left == 0 && right != 0)
+    {
+        res = right;
     }
     else
     {
