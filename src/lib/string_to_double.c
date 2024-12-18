@@ -199,6 +199,7 @@ char **init_chars_table(int size)
 char **_split(char *input, char to_split, int size)
 {
     char **splitted = init_chars_table(size);
+    int env_count = 0;
     int splitted_index = 0;
     int cursor_index = 0;
     char cursor = input[cursor_index];
@@ -209,7 +210,15 @@ char **_split(char *input, char to_split, int size)
             // printf("%d;%d\n", splitted_index, size);
             break;
         }
-        if (cursor == to_split)
+        if (cursor == '(')
+        {
+            env_count++;
+        }
+        else if (cursor == ')')
+        {
+            env_count--;
+        }
+        if (env_count == 0 && cursor == to_split)
         {
             splitted_index++;
         }
@@ -244,7 +253,15 @@ double parse_sqrt(char *input)
 {
     char **splitted = _split(rm_spaces(input), SQRT_OPERATOR, 2);
     double left = parse_floats(splitted[0]);
-    double right = sqrt(parse_floats(splitted[1]));
+    double right;
+    if (splitted[1][0] == '(')
+    {
+        right = sqrt(parse_envel(splitted[1]));
+    }
+    else
+    {
+        right = sqrt(parse_floats(splitted[1]));
+    }
     double res;
     if (left != 0 && right == 0)
     {
@@ -289,6 +306,14 @@ int operator_numbers(char *input, char operator)
         cursor_index++;
         cursor = input[cursor_index];
     }
+    if (env_count > 0)
+    {
+        throw_error("non-closing enveloppe was detected\n");
+    }
+    else if (env_count < 0)
+    {
+        throw_error("non-opened enveloppe was detected\n");
+    }
     return count;
 }
 
@@ -300,8 +325,14 @@ double parse_multiply(char *input)
     double res = 1;
     for (int i = 0; i < multiply_number; i++)
     {
-
-        res = res * parse_sqrt(_splitted[i]);
+        if (_splitted[i][0] == '(')
+        {
+            res = res * parse_envel(_splitted[i]);
+        }
+        else
+        {
+            res = res * parse_sqrt(_splitted[i]);
+        }
     }
     return res;
 }
@@ -310,10 +341,25 @@ double parse_division(char *input)
 {
     int division_number = operator_numbers(input, DIVIDE_OPERATOR) + 1;
     char **_splitted = _split(rm_spaces(input), DIVIDE_OPERATOR, division_number);
-    double res = parse_multiply(_splitted[0]);
+    double res;
+    if (_splitted[0][0] == '(')
+    {
+        res = parse_envel(_splitted[0]);
+    }
+    else
+    {
+        res = parse_multiply(_splitted[0]);
+    }
     for (int i = 1; i < division_number; i++)
     {
-        res = res / parse_multiply(_splitted[i]);
+        if (_splitted[i][0] == '(')
+        {
+            res = res / parse_multiply(_splitted[i]);
+        }
+        else
+        {
+            res = res / parse_multiply(_splitted[i]);
+        }
     }
     return res;
 }
@@ -322,10 +368,25 @@ double parse_add(char *input)
 {
     int add_number = operator_numbers(input, PLUS_OPERATOR) + 1;
     char **_splitted = _split(rm_spaces(input), PLUS_OPERATOR, add_number);
-    double res = 0;
+    double res;
+    if (_splitted[0][0] == '(')
+    {
+        res = parse_envel(_splitted[0]);
+    }
+    else
+    {
+        res = parse_division(_splitted[0]);
+    }
     for (int i = 0; i < add_number; i++)
     {
-        res = res + parse_division(_splitted[i]);
+        if (_splitted[i][0] == '(')
+        {
+            res = res + parse_envel(_splitted[i]);
+        }
+        else
+        {
+            res = res + parse_division(_splitted[i]);
+        }
     }
     return res;
 }
@@ -334,10 +395,26 @@ double parse_substract(char *input)
 {
     int add_number = operator_numbers(input, MINUS_OPERATOR) + 1;
     char **_splitted = _split(rm_spaces(input), MINUS_OPERATOR, add_number);
-    double res = parse_add(_splitted[0]);
+
+    double res;
+    if (_splitted[0][0] == '(')
+    {
+        res = parse_envel(_splitted[0]);
+    }
+    else
+    {
+        res = parse_add(_splitted[0]);
+    }
     for (int i = 1; i < add_number; i++)
     {
-        res = res - parse_add(_splitted[i]);
+        if (_splitted[i][0] == '(')
+        {
+            res = res - parse_envel(_splitted[i]);
+        }
+        else
+        {
+            res = res - parse_add(_splitted[i]);
+        }
     }
     return res;
 }
@@ -375,19 +452,33 @@ char *rm_envelloppe(char *input)
                 push_char(&res, cursor);
             }
         }
+        else if (is_starting == 1)
+        {
+            push_char(&res, cursor);
+        }
+
         if (is_starting == 1 && env_count == 0)
         {
-            return res;
+            break;
         }
         cursor_index++;
         cursor = input[cursor_index];
     }
+    if (env_count > 0)
+    {
+        throw_error("non-closing enveloppe was detected\n");
+    }
+    else if (env_count < 0)
+    {
+        throw_error("non-opened enveloppe was detected\n");
+    }
+    printf("%s: \n", res);
     return res;
 }
 
 int ext_op(char *i)
 {
-    return operator_numbers(i, PLUS_OPERATOR) + operator_numbers(i, MINUS_OPERATOR) + operator_numbers(i, MULTIPLY_OPERATOR) + operator_numbers(i, DIVIDE_OPERATOR);
+    return operator_numbers(i, PLUS_OPERATOR) + operator_numbers(i, MINUS_OPERATOR) + operator_numbers(i, MULTIPLY_OPERATOR) + operator_numbers(i, DIVIDE_OPERATOR) + operator_numbers(i, SQRT_OPERATOR);
 }
 
 double parse_envel(char *input)
@@ -405,7 +496,5 @@ double parse_envel(char *input)
 
 double string_to_double(char *input)
 {
-    double res = 0;
-    not_implemented();
-    return res;
+    return parse_envel(input);
 }

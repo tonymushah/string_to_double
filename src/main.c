@@ -23,5 +23,7 @@ int main()
     printf("%lf\n", parse_substract("V2 / 2 + 1"));
     printf("%s\n", rm_envelloppe("((()))"));
     printf("%d\n", operator_numbers("(2 * 4 * 5) * 2", '*'));
+    printf("%d\n", ext_op("1 * (3 + 4) - 2"));
+    printf("last: %lf\n", string_to_double("(V(3 * 4))"));
     return 0;
 }
