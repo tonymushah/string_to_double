@@ -385,6 +385,24 @@ char *rm_envelloppe(char *input)
     return res;
 }
 
+int ext_op(char *i)
+{
+    return operator_numbers(i, PLUS_OPERATOR) + operator_numbers(i, MINUS_OPERATOR) + operator_numbers(i, MULTIPLY_OPERATOR) + operator_numbers(i, DIVIDE_OPERATOR);
+}
+
+double parse_envel(char *input)
+{
+    int external_operators = ext_op(input);
+    if (external_operators == 0 && input[0] == '(')
+    {
+        return parse_envel(rm_envelloppe(input));
+    }
+    else
+    {
+        return parse_substract(input);
+    }
+}
+
 char *until_next_token(char *input, int *cursor)
 {
     return "0";

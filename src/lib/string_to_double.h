@@ -17,5 +17,7 @@ double parse_division(char *input);
 double parse_add(char *input);
 double parse_substract(char *input);
 char *rm_envelloppe(char *input);
+int ext_op(char *input);
+double parse_envel(char *input);
 
 #endif
