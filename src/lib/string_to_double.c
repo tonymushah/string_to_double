@@ -206,7 +206,7 @@ char **_split(char *input, char to_split, int size)
     {
         if (splitted_index > size)
         {
-            printf("%d;%d\n", splitted_index, size);
+            // printf("%d;%d\n", splitted_index, size);
             break;
         }
         if (cursor == to_split)
@@ -326,6 +326,49 @@ double parse_substract(char *input)
     for (int i = 1; i < add_number; i++)
     {
         res = res - parse_add(_splitted[i]);
+    }
+    return res;
+}
+
+char *rm_envelloppe(char *input)
+{
+    char *res = init_empty_chars();
+    int is_starting = 0;
+    int env_count = 0;
+    int cursor_index = 0;
+    char cursor = input[cursor_index];
+    while (cursor != '\0')
+    {
+        if (cursor == '(')
+        {
+            env_count++;
+            if (is_starting == 0)
+            {
+                is_starting = 1;
+            }
+            else
+            {
+                push_char(&res, cursor);
+            }
+        }
+        else if (cursor == ')')
+        {
+            env_count--;
+            if (is_starting == 0)
+            {
+                is_starting = 1;
+            }
+            if (env_count != 0)
+            {
+                push_char(&res, cursor);
+            }
+        }
+        if (is_starting == 1 && env_count == 0)
+        {
+            return res;
+        }
+        cursor_index++;
+        cursor = input[cursor_index];
     }
     return res;
 }

@@ -16,5 +16,6 @@ double parse_multiply(char *input);
 double parse_division(char *input);
 double parse_add(char *input);
 double parse_substract(char *input);
+char *rm_envelloppe(char *input);
 
 #endif
