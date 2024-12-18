@@ -288,7 +288,27 @@ double parse_multiply(char *input)
     double res = 1;
     for (int i = 0; i < multiply_number; i++)
     {
+
         res = res * parse_sqrt(_splitted[i]);
+    }
+    return res;
+}
+
+double parse_division(char *input)
+{
+    int division_number = operator_numbers(input, DIVIDE_OPERATOR) + 1;
+    char **_splitted = _split(rm_spaces(input), DIVIDE_OPERATOR, division_number);
+    double res = 0;
+    for (int i = 0; i < division_number; i++)
+    {
+        if (res == 0)
+        {
+            res = parse_multiply(_splitted[i]);
+        }
+        else
+        {
+            res = res / parse_multiply(_splitted[i]);
+        }
     }
     return res;
 }

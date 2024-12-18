@@ -13,5 +13,6 @@ char *rm_spaces(char *input);
 double parse_sqrt(char *input);
 int operator_numbers(char *input, char operator);
 double parse_multiply(char *input);
+double parse_division(char *input);
 
 #endif

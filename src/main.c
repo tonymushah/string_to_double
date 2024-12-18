@@ -17,5 +17,6 @@ int main()
     printf("%lf\n", parse_sqrt("V2"));
     printf("%d\n", operator_numbers("2 * 4 * 5", '*'));
     printf("%lf\n", parse_multiply("2 * 4 * 5"));
+    printf("%lf\n", parse_division("2 * 3 / V6"));
     return 0;
 }
